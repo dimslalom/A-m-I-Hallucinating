@@ -4,12 +4,14 @@ import TwitterCard from './content/TwitterCard';
 import AbstractCard from './content/AbstractCard';
 import ReferenceCard from './content/ReferenceCard';
 import SlideCard from './content/SlideCard';
+import InstagramCard from './content/InstagramCard';
 
 function ContentCard({ type, content }) {
-  if (type === 'tweet')     return <TwitterCard   content={content} />;
-  if (type === 'abstract')  return <AbstractCard  content={content} />;
-  if (type === 'reference') return <ReferenceCard content={content} />;
-  if (type === 'slide')     return <SlideCard     content={content} />;
+  if (type === 'tweet')     return <TwitterCard    content={content} />;
+  if (type === 'abstract')  return <AbstractCard   content={content} />;
+  if (type === 'reference') return <ReferenceCard  content={content} />;
+  if (type === 'slide')     return <SlideCard      content={content} />;
+  if (type === 'instagram') return <InstagramCard  content={content} />;
   return null;
 }
 

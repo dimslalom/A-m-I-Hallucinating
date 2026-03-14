@@ -5,7 +5,7 @@
 
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
-  background: var(--c-bg);
+  background: #ffffff;
   color: var(--c-primary);
   min-height: 100vh;
   display: flex;
@@ -208,20 +208,25 @@ main {
 }
 
 /* ─── Question Screen ───────────────────────────────────────── */
-#screen-game { }
+#screen-game {
+  align-self: flex-start;
+  padding-top: 24px;
+  width: 100%;
+}
 
 .progress-bar {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   justify-content: center;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .dot {
-  width: 32px;
-  height: 6px;
+  width: 40px;
+  height: 8px;
   background: #d3d6da;   /* always grey — not themed */
   transition: background 0.3s;
+  border-radius: 4px;
 }
 
 .dot.active  { background: #000000; }    /* always black  — not themed */
@@ -229,7 +234,7 @@ main {
 .dot.wrong   { background: var(--c-wrong); }
 
 .q-label {
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--c-muted);
@@ -238,11 +243,11 @@ main {
 }
 
 .q-sublabel {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: #333;
   text-align: center;
   letter-spacing: 0.04em;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 
 .question-card {
@@ -928,11 +933,132 @@ main {
   filter: grayscale(0.2);
 }
 
+/* ── Instagram Card ──────────────────────────────────────────── */
+.ig-card {
+  background: #fff;
+  border: 1px solid #dbdbdb;
+  margin-bottom: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.ig-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  gap: 10px;
+}
+
+.ig-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  /* Instagram-style gradient ring */
+  outline: 2.5px solid transparent;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #c13584;
+}
+
+.ig-username-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.ig-username {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #000;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ig-follow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0095f6;
+  flex-shrink: 0;
+}
+
+.ig-dots-icon {
+  width: 18px;
+  height: 18px;
+  color: #262626;
+  flex-shrink: 0;
+}
+
+.ig-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.ig-actions {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px 6px;
+}
+
+.ig-action-left {
+  display: flex;
+  gap: 14px;
+  flex: 1;
+}
+
+.ig-action-icon {
+  width: 22px;
+  height: 22px;
+  color: #262626;
+}
+
+.ig-likes {
+  padding: 0 12px 5px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.ig-caption {
+  padding: 0 12px 5px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #000;
+}
+
+.ig-caption-user {
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.ig-hashtags {
+  color: #00376b;
+}
+
+.ig-comments {
+  padding: 0 12px 5px;
+  font-size: 0.78rem;
+  color: #737373;
+}
+
+.ig-time {
+  padding: 0 12px 12px;
+  font-size: 0.65rem;
+  color: #8e8e8e;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 /* Remove bottom margin from cards inside comparison wrapper */
 .card-option .tw-card,
 .card-option .abs-card,
 .card-option .ref-card,
-.card-option .slide-card {
+.card-option .slide-card,
+.card-option .ig-card {
   margin-bottom: 0;
 }
 

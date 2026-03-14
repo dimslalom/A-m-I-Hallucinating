@@ -190,7 +190,7 @@ export const QUESTIONS = [
   // ── Q8: References ────────────────────────────────────────────────────────
   {
     type: 'reference',
-    prompt: 'One of these papers was invented by AI. Which one looks more credible?',
+    prompt: "One of these papers was invented by AI. Which one is it?",
     optionA: {
       heading: 'References',
       citation: 'Zhang, Y., & Williams, J. (2023). Detecting AI-generated academic content: A machine learning approach with 94.7% accuracy. Nature Machine Intelligence, 5(11), 1203–1215. https://doi.org/10.1038/s42256-023-00721-4',
@@ -370,29 +370,35 @@ export const QUESTIONS = [
     explanationWrong: 'A was the bot. It summarised the EU AI Act like it is writing an explainer, not reacting to news. B admits she does not know if it will work. Confidence without caveats is usually a red flag.',
   },
 
-  // ── Q15: Abstracts ────────────────────────────────────────────────────────
+  // ── Q15: Instagram ────────────────────────────────────────────────────────
   {
-    type: 'abstract',
-    prompt: 'One of these findings is far too alarming to be credible,  which one?',
+    type: 'instagram',
+    prompt: 'Which post is from an actual student?',
     optionA: {
-      journal: 'Social Media + Society',
-      volume: 'Vol. 10, No. 2 (2024)',
-      title: 'The Impact of AI-Generated Misinformation on University Student Information Literacy',
-      authors: 'Thompson, L., & Singh, A.',
-      affiliation: 'Griffith University',
-      abstract: 'This longitudinal study tracked 2,156 university students over 18 months to assess the impact of AI-generated misinformation on information literacy development. Students exposed to high volumes of AI-generated content demonstrated a 43.7% higher susceptibility to misinformation compared to control groups. Academic performance metrics declined by an average of 0.8 GPA points among high-exposure groups. Our findings urgently underscore the need for mandatory AI literacy education in tertiary curricula.',
+      username: 'studywithai.hub',
+      avatarInitials: 'SW',
+      avatarColor: '#5851db',
+      imageGradient: ['#667eea', '#764ba2'],
+      likes: '412',
+      caption: 'AI is changing the way students study and we are HERE for it! ✨ Smarter workflows, better essays, and more time for what actually matters. Work smarter, not harder! 🚀📚',
+      hashtags: '#StudySmarter #AILearning #AcademicSuccess #StudentLife #ProductivityHacks #FutureOfEducation',
+      comments: 6,
+      time: '1 DAY AGO',
     },
     optionB: {
-      journal: 'First Monday',
-      volume: 'Vol. 29, No. 1 (2024)',
-      title: 'When students know but still don\'t check: The verification gap in digital information literacy',
-      authors: 'Buchanan, R.',
-      affiliation: 'Queensland University of Technology',
-      abstract: "This mixed-methods study of 89 undergraduates found a persistent gap between what students know they should do (verify online information) and what they actually do under time pressure. Interviews revealed complex rationalisations: trust in search engine ranking, deadline pressure, and the 'good enough' threshold. We argue that information literacy interventions focused on skills alone miss the motivational and contextual factors that shape real-world behaviour.",
+      username: 'alex.nguyen.uq',
+      avatarInitials: 'AN',
+      avatarColor: '#e8956d',
+      imageGradient: ['#f8cdda', '#f7971e'],
+      likes: '847',
+      caption: 'accidentally submitted the ai draft instead of my actual essay. i have never moved so fast in my life to email a tutor. update: she replied within 4 mins. i owe her my whole degree',
+      hashtags: '',
+      comments: 31,
+      time: '5 HOURS AGO',
     },
-    answer: 'A',
-    explanationRight: 'A is the AI and you nailed it. "43.7% higher susceptibility" and "GPA declining by 0.8 points" are too precise and too alarming. B found the boring truth: students know they should check things and just do not bother.',
-    explanationWrong: 'A was the fake. "Urgently underscore" and suspiciously exact stats are tells. Real longitudinal studies find messy, human results. If the numbers are that specific and the conclusion is that dire, be suspicious.',
+    answer: 'B',
+    explanationRight: 'A is the content bot and you clocked it. "We are HERE for it" followed by six hashtags is pure AI page energy. B has a specific panic and a four-minute reply. That is real life.',
+    explanationWrong: 'A was the bot. Hashtag dumps and phrases like "work smarter, not harder" are AI content-farm signatures. B is someone whose hands were shaking while typing. Real people do not caption their anxiety with productivity advice.',
   },
 
   // ── Q16: References ───────────────────────────────────────────────────────
@@ -499,21 +505,35 @@ export const QUESTIONS = [
     explanationWrong: 'B was the fake. Effect sizes that large and conclusions that strong do not come from one study. A found students completed more drafts but did not write better. Null results are real results. Distrust studies that only ever win.',
   },
 
-  // ── Q20: References ───────────────────────────────────────────────────────
+  // ── Q20: Instagram ────────────────────────────────────────────────────────
   {
-    type: 'reference',
-    prompt: 'One of these papers is about AI hallucination,  and was itself hallucinated. Which one?',
+    type: 'instagram',
+    prompt: 'Which caption was written by a real person?',
     optionA: {
-      heading: 'References',
-      citation: 'Chen, L., & Robertson, A. (2022). Semantic coherence in large language model outputs: Measuring hallucination frequency across domains. Computational Linguistics, 48(3), 791–824. https://doi.org/10.1162/coli_a_00453',
+      username: 'bec.writes.things',
+      avatarInitials: 'BW',
+      avatarColor: '#2d6a4f',
+      imageGradient: ['#a8edea', '#fed6e3'],
+      likes: '2,103',
+      caption: 'day 4 of using chatgpt for my thesis and i think we\'ve reached the stage where it understands my research better than i do. not sure if this is impressive or a personal failure',
+      hashtags: '',
+      comments: 67,
+      time: '2 DAYS AGO',
     },
     optionB: {
-      heading: 'References',
-      citation: 'Floridi, L., & Cowls, J. (2019). A unified framework of five principles for AI in society. Harvard Data Science Review, 1(1). https://doi.org/10.1162/99608f92.8cd550d1',
+      username: 'smartstudent.official',
+      avatarInitials: 'SS',
+      avatarColor: '#f4a261',
+      imageGradient: ['#ffecd2', '#fcb69f'],
+      likes: '1,287',
+      caption: 'Unlocking your academic potential has never been easier! 💡 Harness the transformative power of AI to elevate your thesis, streamline your research process, and achieve the academic excellence you deserve. The future of learning is here! 🌟',
+      hashtags: '#ThesisLife #AIProductivity #StudyMotivation #AcademicSuccess #SmartStudent #Empowered',
+      comments: 14,
+      time: '3 DAYS AGO',
     },
     answer: 'A',
-    explanationRight: 'A is the hallucination, and it is genuinely poetic: AI invented a paper about AI hallucination. Computational Linguistics is a real journal; this article is not in it. B is real and verifiable. Excellent catch.',
-    explanationWrong: 'A was the fake, and a delightfully ironic one: a hallucinated paper about hallucination. Paste the DOI in a browser and it goes nowhere. One search is all that stands between you and citing a ghost.',
+    explanationRight: 'B is the bot and you got it. "Harness the transformative power" to "achieve the excellence you deserve" is a LinkedIn post wearing a student\'s clothes. A is someone quietly having an existential crisis about their thesis. That\'s real.',
+    explanationWrong: 'B was the bot. Six hashtags and phrases like "unlocking your potential" are AI content-page classics. A has no hashtags, no emojis, and one very specific worry. Real people do not caption their problems with empowerment slogans.',
   },
 
 ];
