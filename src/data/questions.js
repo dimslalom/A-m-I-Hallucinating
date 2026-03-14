@@ -25,7 +25,8 @@ export const QUESTIONS = [
       verified: false,
     },
     answer: 'A',
-    explanation: 'B is the bot. "2.3 hours saved per assignment", who measures that? Hashtag spam, invented stats, zero personality. A reads like an anxiety spiral every student recognises because it is one. The real risk: students who can\'t spot B share AI misinformation as lived experience.',
+    explanationRight: 'Spotted it. B is pure bot energy: invented stats, hashtag graveyard, zero chaos. Real students have anxiety spirals, not productivity metrics. Your BS detector is working.',
+    explanationWrong: 'B was the bot. "2.3 hours saved per assignment" and hashtag spam are dead giveaways. Real people don\'t narrate their life like a case study. Next time, look for messiness over polish.',
   },
 
   // ── Q2: Abstracts ─────────────────────────────────────────────────────────
@@ -49,7 +50,8 @@ export const QUESTIONS = [
       abstract: 'This paper reports on interview-based research with 24 undergraduate students across two semesters. Participants described complex, often contradictory feelings about AI tool use, seeing it as both useful and a source of worry about whether their work was still their own. Our analysis points to a gap between institutional policy and what students actually do, and asks what "academic voice" even means when AI can write a coherent paragraph in seconds.',
     },
     answer: 'A',
-    explanation: 'A is AI. 1,847 submissions? Exactly 4.2 hallucinations per document? Real data is messy. B sounds like researchers who spent months confused, because that\'s what real research looks like. The real risk: those fabricated figures end up cited in student essays with a DOI that resolves to nothing.',
+    explanationRight: 'A is the fake and you nailed it. "4.2 fabricated facts per document" is absurdly precise. Real research gets weird and inconclusive. B sounds confused because actual fieldwork is confusing.',
+    explanationWrong: 'A was the AI. The tell: impossibly tidy numbers. 1,847 submissions, exactly 4.2 hallucinations per doc. Real data never comes out that clean. If the stats look suspiciously precise, treat them as suspect.',
   },
 
   // ── Q3: References ────────────────────────────────────────────────────────
@@ -65,7 +67,8 @@ export const QUESTIONS = [
       citation: 'Morrison, C. L., & Patel, R. K. (2023). AI-mediated academic dishonesty: Prevalence, detection, and institutional response strategies. International Journal of Educational Integrity, 19(3), 441–458. https://doi.org/10.1007/s40979-023-00129-5',
     },
     answer: 'B',
-    explanation: 'B is fake, beautifully, confidently fake. The journal is real, the format is perfect, the DOI goes nowhere. A is the actual "Stochastic Parrots" paper, look it up, it\'s a classic. The real risk: AI generates entire reference lists like this, every citation formatted correctly, most leading nowhere.',
+    explanationRight: 'B is the phantom and you clocked it. Real journal, convincing DOI, zero actual paper. A is the Stochastic Parrots paper, genuinely famous and genuinely checkable. Good eye.',
+    explanationWrong: 'B was the fake. The journal is real, the format is perfect, the paper does not exist. AI nails the packaging and invents the product. Next time, paste the DOI into a browser before you trust it.',
   },
 
   // ── Q4: Slides ────────────────────────────────────────────────────────────
@@ -97,7 +100,8 @@ export const QUESTIONS = [
       slideNum: '8 / 22',
     },
     answer: 'A',
-    explanation: 'B is the bot. "Implementation of verification protocols", no human has ever said that out loud. A has a specific colleague, a running joke, and an analogy you\'ll actually remember. Humans teach with stories; AI produces the Wikipedia version. The real risk: studying from B gives you the shape of knowledge with none of the substance.',
+    explanationRight: 'B is the bot and you got it. Nobody says "implementation of verification protocols" out loud. A has a specific joke and an analogy you\'ll actually remember. Humans teach with stories; AI teaches with vibes.',
+    explanationWrong: 'B was the bot. "Utilise, implement, leverage" are AI\'s favourite verbs. Real lecturers use bad analogies and specific examples. If every bullet sounds like a LinkedIn post, be skeptical.',
   },
 
   // ── Q5: Tweets ────────────────────────────────────────────────────────────
@@ -125,7 +129,8 @@ export const QUESTIONS = [
       verified: false,
     },
     answer: 'B',
-    explanation: 'A reads like a press release, not a reaction. B is how a real lawyer talks: lowercase, exasperated, "the judge was not amused." That\'s someone who was genuinely horrified. The real risk: those lawyers trusted AI the way many students do, and had to explain to a federal judge why they didn\'t check.',
+    explanationRight: 'B is real and you picked it. Lowercase, exasperated, "the judge was not amused." That\'s someone who was actually horrified, not filing a press release. Solid read.',
+    explanationWrong: 'A was the bot. It covers the event like a news summary rather than a reaction. B is how real people process genuine horror: lowercase, tired, specific. Look for emotion, not coverage.',
   },
 
   // ── Q6: Tweets ────────────────────────────────────────────────────────────
@@ -153,7 +158,8 @@ export const QUESTIONS = [
       verified: false,
     },
     answer: 'B',
-    explanation: 'A is AI, technically informative, emotionally dead. B has a detail only possible if it actually happened: "the title sounds exactly like something I\'d write, the author name is *slightly* wrong." That one word "slightly" does all the work. The real risk: hallucinations are hardest to catch in your own field, the language is fluent, the details are plausible.',
+    explanationRight: 'B is real and you got it. "The author name is slightly wrong" is the kind of detail only an eyewitness notices. A is technically accurate and completely soulless. Great instinct.',
+    explanationWrong: 'A was the bot. It explains hallucination as a concept; B experienced it in real life. That one word "slightly" in B makes it real. AI describes categories. Humans describe moments.',
   },
 
   // ── Q7: Abstracts ─────────────────────────────────────────────────────────
@@ -177,7 +183,8 @@ export const QUESTIONS = [
       abstract: 'This comprehensive study evaluated four AI detection algorithms across a dataset of 3,412 undergraduate submissions from six Australian universities. Detection accuracy rates ranged from 87.3% to 94.6% across tools, with false positive rates between 2.1% and 4.7%. Findings demonstrate that AI detection systems are highly effective when implemented as part of a comprehensive academic integrity framework. These results underscore the critical importance of institutional adoption of multi-layered AI detection protocols.',
     },
     answer: 'B',
-    explanation: 'B is AI. 3,412 submissions, 87.3–94.6% accuracy, 2.1–4.7% false positives, suspiciously precise numbers pointing to a suspiciously tidy conclusion. A is messier: students are anxious but not deterred. Real findings complicate things. The real risk: students skim abstracts for the number, and AI always provides one.',
+    explanationRight: 'B is the AI and you spotted it. 87.3 to 94.6 percent accuracy, 2.1 to 4.7 false positives, way too tidy. A found anxious students and no clean takeaway. Real findings complicate things.',
+    explanationWrong: 'B was the fake. Numbers that precise pointing to a conclusion that convenient is a bot classic. Real studies find that students are stressed and not deterred. If your data tells a perfect story, it probably is not true.',
   },
 
   // ── Q8: References ────────────────────────────────────────────────────────
@@ -193,7 +200,8 @@ export const QUESTIONS = [
       citation: 'Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., … Polosukhin, I. (2017). Attention is all you need. Advances in Neural Information Processing Systems, 30, 5998–6008.',
     },
     answer: 'A',
-    explanation: 'A is fabricated. "94.7% accuracy" in the title is the tell, AI loves a suspiciously precise number. Nature Machine Intelligence is a real journal; this paper isn\'t in it. B is "Attention Is All You Need", one of the most important CS papers ever written. The real risk: submitting an AI-generated reference list is misconduct even if you genuinely believed every paper was real.',
+    explanationRight: 'A is the hallucination and you got it. "94.7% accuracy" in a paper title is the tell. B is "Attention Is All You Need," one of the most cited CS papers ever. You know your classics.',
+    explanationWrong: 'A was the fake. AI loves putting suspiciously precise numbers in paper titles. Nature Machine Intelligence is a real journal; this paper is not in it. Look up every reference before you cite it. One search is enough.',
   },
 
   // ── Q9: Slides ────────────────────────────────────────────────────────────
@@ -225,7 +233,8 @@ export const QUESTIONS = [
       slideNum: '11 / 28',
     },
     answer: 'B',
-    explanation: 'A is AI, "utilise," "implement," "leverage." All the verbs of expertise, none of the expertise. B gives you a before/after prompt example, tells you to Google every citation (they mean every one), and admits the AI will confidently lie to you. That\'s a real teacher. The real risk: advice that sounds thorough but contains nothing specific is exactly what AI produces.',
+    explanationRight: 'A is the bot and you caught it. "Utilise, implement, leverage" with nothing specific behind them. B gives you an actual example and admits the AI will confidently lie. That\'s a real teacher.',
+    explanationWrong: 'A was the bot. Every bullet sounds authoritative but tells you nothing you can use. B gives you a before/after prompt and a real warning: it will be wrong with confidence. Substance beats structure every time.',
   },
 
   // ── Q10: Tweets ───────────────────────────────────────────────────────────
@@ -253,7 +262,8 @@ export const QUESTIONS = [
       verified: false,
     },
     answer: 'A',
-    explanation: 'B is AI, policy-speak, hashtag storm, zero personality. A is a student whose hand pre-emptively filed for workers comp. No AI has ever written a joke that good. Also: hand-written exams are literally happening. The real risk: stricter assessments, oral defences, and invigilated exams are the direct consequence of students not using AI responsibly.',
+    explanationRight: 'B is the policy bot and you nailed it. "Disciplinary proceedings and AI detection screening" is pure bureaucrat. A\'s hand filing for workers comp is genuinely funny. AI would never write that joke.',
+    explanationWrong: 'B was the bot. Policy-speak and hashtag dumps are bot calling cards. A is someone who was specifically and hilariously annoyed. Real people vent; bots issue reminders.',
   },
 
   // ── Q11: Abstracts ────────────────────────────────────────────────────────
@@ -277,7 +287,8 @@ export const QUESTIONS = [
       abstract: 'We reviewed real-world deployments of AI clinical decision support tools across 23 health systems. While some implementations showed genuine benefit in narrow, well-defined tasks (e.g., diabetic retinopathy screening), generalised claims about AI reducing diagnostic error have not been replicated in routine clinical practice. Several implementations correlated with increased clinician over-reliance and reduced critical thinking. Deployment pace has significantly outstripped the evidence base.',
     },
     answer: 'B',
-    explanation: 'A is AI. A 2.7-fold improvement, 31.4% fewer errors, 18.9% fewer readmissions, real meta-analyses don\'t produce results that clean. B is how healthcare researchers actually write: genuine benefit in narrow tasks, honest about over-reliance risks. The real risk: a student citing A\'s figures has spread hallucinated medical statistics with a clear conscience.',
+    explanationRight: 'A is the fake and you got it. A 2.7-fold improvement and 31.4% fewer errors is a product pitch, not research. B admitted the evidence is limited and the risks are real. That\'s what honest science looks like.',
+    explanationWrong: 'A was the AI. Numbers that dramatic and results that clean do not come from real meta-analyses. Real healthcare research is full of caveats. If an abstract sounds like a press release, it probably was.',
   },
 
   // ── Q12: References ───────────────────────────────────────────────────────
@@ -293,7 +304,8 @@ export const QUESTIONS = [
       citation: 'Henderson, P., & Okafor, N. (2023). Cognitive biases in AI-mediated decision making: Implications for educational assessment. Journal of Applied Psychology, 108(4), 623–641. https://doi.org/10.1037/apl0001124',
     },
     answer: 'B',
-    explanation: 'B is the phantom. The journal is real, the DOI looks convincing, the article never existed. A is Kahneman\'s "Thinking, Fast and Slow", one of the most cited books in psychology, impossible to fabricate. The real risk: UQ\'s academic integrity team has seen reference lists where every citation is plausible, formatted perfectly, and doesn\'t exist.',
+    explanationRight: 'B is the phantom and you spotted it. Looks right, DOI and all, but the paper does not exist. A is Kahneman\'s "Thinking, Fast and Slow," impossible to fake. Clean catch.',
+    explanationWrong: 'B was the fake. The format was perfect, which is exactly the problem. AI does not mess up the formatting; it makes up the content. Paste the DOI into a browser before you cite anything.',
   },
 
   // ── Q13: Slides ───────────────────────────────────────────────────────────
@@ -325,7 +337,8 @@ export const QUESTIONS = [
       slideNum: '6 / 19',
     },
     answer: 'A',
-    explanation: 'B is AI. "Comprehensive attribution is essential for academic transparency", impressive amount of words to say nothing. A gives you a real APA example, reminds you norms vary by course (they do), and ends with "email your tutor, not ChatGPT." The real risk: AI reliably tells you what category to think about; it can\'t tell you how.',
+    explanationRight: 'B is the bot and you picked the right one. "Comprehensive attribution is essential for transparency" is a lot of words that say nothing. A gives you an actual APA example and ends with real human sarcasm.',
+    explanationWrong: 'B was the bot. It told you what category of thing to think about but gave you nothing specific. A has a real format, a real caveat about course-by-course differences, and an actual joke. Look for specifics over structure.',
   },
 
   // ── Q14: Tweets ───────────────────────────────────────────────────────────
@@ -353,7 +366,8 @@ export const QUESTIONS = [
       verified: true,
     },
     answer: 'B',
-    explanation: 'A is AI, reads like the Wikipedia lede, complete with "robust enforcement mechanisms." B is from a real AI researcher who admits she doesn\'t know if it\'ll work. Real experts hedge. The real risk: we amplify what feels human and certain, and AI has learned to sound both.',
+    explanationRight: 'B is real and you got it. Dr. Kate Crawford is a legit AI researcher. "Will it work? Unclear." Real experts hedge. A reads like the Wikipedia intro to the same story.',
+    explanationWrong: 'A was the bot. It summarised the EU AI Act like it is writing an explainer, not reacting to news. B admits she does not know if it will work. Confidence without caveats is usually a red flag.',
   },
 
   // ── Q15: Abstracts ────────────────────────────────────────────────────────
@@ -377,7 +391,8 @@ export const QUESTIONS = [
       abstract: "This mixed-methods study of 89 undergraduates found a persistent gap between what students know they should do (verify online information) and what they actually do under time pressure. Interviews revealed complex rationalisations: trust in search engine ranking, deadline pressure, and the 'good enough' threshold. We argue that information literacy interventions focused on skills alone miss the motivational and contextual factors that shape real-world behaviour.",
     },
     answer: 'A',
-    explanation: 'A is AI. "GPA declining by exactly 0.8 points" and "43.7% higher susceptibility", too precise, too alarming to be real. "Urgently underscore" is the tell. B has 89 students and one awkward truth: students know they should verify things and just don\'t. The real risk: reading A\'s statistics without questioning them is exactly what this campaign is about.',
+    explanationRight: 'A is the AI and you nailed it. "43.7% higher susceptibility" and "GPA declining by 0.8 points" are too precise and too alarming. B found the boring truth: students know they should check things and just do not bother.',
+    explanationWrong: 'A was the fake. "Urgently underscore" and suspiciously exact stats are tells. Real longitudinal studies find messy, human results. If the numbers are that specific and the conclusion is that dire, be suspicious.',
   },
 
   // ── Q16: References ───────────────────────────────────────────────────────
@@ -393,7 +408,8 @@ export const QUESTIONS = [
       citation: 'Nakamura, S., & Obi, T. (2023). Transformer architecture optimisation for educational NLP applications: A systematic review. Computers & Education: Artificial Intelligence, 4(2), 100–117. https://doi.org/10.1016/j.caeai.2023.100117',
     },
     answer: 'B',
-    explanation: 'B is fabricated, the journal exists, the DOI pattern looks right, the authors sound plausible, the paper is nowhere. A is the LeCun-Bengio-Hinton deep learning paper, cited 70,000+ times by three Turing Award winners. The real risk: the journal is real, the authors are real, the article is not, and it has appeared in submitted work.',
+    explanationRight: 'B is fabricated and you got it. Real journal, plausible authors, zero actual paper. A is LeCun, Bengio, and Hinton with 70,000+ citations. Hard to fake that energy.',
+    explanationWrong: 'B was the fake. The journal exists, the authors sound real, the paper is not there. AI fakes the vibe of credibility without the substance. Check at least one citation next time. Just one.',
   },
 
   // ── Q17: Slides ───────────────────────────────────────────────────────────
@@ -425,7 +441,8 @@ export const QUESTIONS = [
       slideNum: '3 / 17',
     },
     answer: 'A',
-    explanation: 'B is AI, legal obligations dressed as advice. "Consult your data governance framework" tells you where to look, not what to do. A gives you the specific clause most people miss and a rule of thumb you\'ll actually remember. The real risk: AI knows exactly how compliance advice is supposed to sound, even when it has nothing useful to say.',
+    explanationRight: 'B is the bot and you picked the right one. "Consult your data governance framework" is the answer that tells you to find the answer somewhere else. A gives you a specific rule you will actually use.',
+    explanationWrong: 'B was the bot. It listed legal obligations without telling you anything actionable. A gives you the clause most people miss and a rule of thumb you can remember. AI knows how compliance advice sounds; it does not know what you need.',
   },
 
   // ── Q18: Tweets ───────────────────────────────────────────────────────────
@@ -453,7 +470,8 @@ export const QUESTIONS = [
       verified: false,
     },
     answer: 'B',
-    explanation: 'A is AI. "67% faster output, 89% satisfaction retention", invented numbers with no source. B is a designer losing income to a client who thinks AI replaces craft. "AI slop" is something AI would never use to describe itself. The real risk: confident, sourceless statistics get shared without anyone asking where they came from.',
+    explanationRight: 'A is the bot and you caught it. "67% faster, 89% satisfaction retention" with no source because there is no source. B is a real person dealing with a real pay cut. "AI slop" is not something AI would call itself.',
+    explanationWrong: 'A was the bot. Those stats were invented on the spot. B is a designer losing income in real time. Sourceless percentages are a bot classic. Ask where the number came from before you share it.',
   },
 
   // ── Q19: Abstracts ────────────────────────────────────────────────────────
@@ -477,7 +495,8 @@ export const QUESTIONS = [
       abstract: 'This study evaluated AI writing feedback systems across three Australian universities (N = 1,247 students). Students receiving AI-generated feedback demonstrated statistically significant improvements in essay quality (d = 0.74), with 82.3% reporting high satisfaction. Essay scores improved by an average of 12.4 percentage points over the semester. These findings provide compelling evidence for widespread adoption of AI feedback systems as a cost-effective alternative to human tutoring.',
     },
     answer: 'A',
-    explanation: 'B is AI. d = 0.74, 12.4 percentage points improvement, "compelling evidence for widespread adoption", that\'s a sales pitch, not research. A found no significant difference (p = .43). A null result! That\'s what honest experimental work actually looks like. The real risk: research that only reports positive results trains students to expect AI to always work.',
+    explanationRight: 'B is the AI and you spotted it. "Compelling evidence for widespread adoption" is a sales pitch. A found no significant difference (p = .43), a null result, which is exactly what honest experimental research actually looks like.',
+    explanationWrong: 'B was the fake. Effect sizes that large and conclusions that strong do not come from one study. A found students completed more drafts but did not write better. Null results are real results. Distrust studies that only ever win.',
   },
 
   // ── Q20: References ───────────────────────────────────────────────────────
@@ -493,7 +512,8 @@ export const QUESTIONS = [
       citation: 'Floridi, L., & Cowls, J. (2019). A unified framework of five principles for AI in society. Harvard Data Science Review, 1(1). https://doi.org/10.1162/99608f92.8cd550d1',
     },
     answer: 'A',
-    explanation: 'A is the hallucination, delightfully meta: AI invented a paper about AI hallucination. Computational Linguistics is a real journal; this article isn\'t in it. B is the Floridi & Cowls "five principles" paper, real and verifiable. The real risk: AI fabricated research about its own greatest flaw, and it looks exactly as credible as everything else you just read.',
+    explanationRight: 'A is the hallucination, and it is genuinely poetic: AI invented a paper about AI hallucination. Computational Linguistics is a real journal; this article is not in it. B is real and verifiable. Excellent catch.',
+    explanationWrong: 'A was the fake, and a delightfully ironic one: a hallucinated paper about hallucination. Paste the DOI in a browser and it goes nowhere. One search is all that stands between you and citing a ghost.',
   },
 
 ];

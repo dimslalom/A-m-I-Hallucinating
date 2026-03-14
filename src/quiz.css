@@ -931,3 +931,9 @@ main {
 .card-option .slide-card {
   margin-bottom: 0;
 }
+
+@media (max-width: 420px) {
+  .comparison-wrap {
+    flex-direction: column;
+  }
+}

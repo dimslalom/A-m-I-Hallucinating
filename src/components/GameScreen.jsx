@@ -90,7 +90,7 @@ export default function GameScreen({ questions, currentQ, results, onAnswer, onN
       <ExplanationBox
         visible={showExp}
         isCorrect={lastCorrect}
-        explanationText={q.explanation}
+        explanationText={lastCorrect ? q.explanationRight : q.explanationWrong}
         showNext={showNext}
         onNext={onNext}
       />
