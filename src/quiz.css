@@ -146,12 +146,12 @@ main {
 }
 
 .student-id-label {
-  font-size: 0.6rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--c-muted);
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .student-id-label .optional {
@@ -162,15 +162,17 @@ main {
 
 .student-id-input {
   width: 100%;
-  border: 2px solid var(--c-primary);
-  padding: 12px 14px;
-  font-size: 0.95rem;
+  border: 3px solid var(--c-primary);
+  padding: 20px 20px;
+  font-size: 1.4rem;
   font-family: inherit;
   letter-spacing: 0.04em;
   outline: none;
   background: var(--c-bg);
   color: var(--c-primary);
   transition: border-color 0.12s;
+  min-height: 64px;
+  border-radius: 4px;
 }
 
 .student-id-input::placeholder {
@@ -375,13 +377,13 @@ main {
 
 /* ─── Save Score (End Screen) ───────────────────────────────── */
 .save-score-wrap {
-  margin-bottom: 20px;
+  margin-bottom: 28px;
   text-align: left;
 }
 
 .save-row {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   align-items: stretch;
 }
 
@@ -394,8 +396,8 @@ main {
   background: var(--c-primary);
   color: #fff;
   border: none;
-  padding: 12px 20px;
-  font-size: 0.8rem;
+  padding: 20px 32px;
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -403,6 +405,8 @@ main {
   transition: background 0.12s;
   flex-shrink: 0;
   white-space: nowrap;
+  min-height: 64px;
+  border-radius: 4px;
 }
 
 .btn-save:hover:not(:disabled) { background: var(--c-primary-hover); }
