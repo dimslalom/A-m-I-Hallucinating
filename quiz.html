@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A(m)I Hallucinating?</title>
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background: #ffffff;
+      color: #000000;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── Header ────────────────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid #000;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .game-brand {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .game-brand span { font-style: italic; }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #d3d6da;
+    }
+
+    .header-tag {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #787c7e;
+    }
+
+    .score-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 1.5px solid #000;
+      padding: 4px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    /* ─── Main Layout ───────────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .screen {
+      width: 100%;
+      max-width: 560px;
+      display: none;
+    }
+
+    .screen.active { display: block; }
+
+    /* ─── Start Screen ──────────────────────────────────────────── */
+    #screen-start { text-align: center; }
+
+    .hero-title {
+      font-family: "Times New Roman", Times, serif;
+      font-size: clamp(2.2rem, 8vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .hero-title em { font-style: italic; }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: #787c7e;
+      letter-spacing: 0.04em;
+      margin-bottom: 36px;
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1.5px solid #000;
+      margin-bottom: 32px;
+    }
+
+    .rule-cell {
+      padding: 18px 20px;
+      text-align: left;
+      border-right: 1px solid #d3d6da;
+      border-bottom: 1px solid #d3d6da;
+    }
+
+    .rule-cell:nth-child(2n) { border-right: none; }
+    .rule-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+    .rule-lbl {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #787c7e;
+      margin-bottom: 5px;
+    }
+
+    .rule-val {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .rule-val.green { color: #538d4e; }
+    .rule-val.red   { color: #cc3333; }
+
+    .btn-primary {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 16px 0;
+      width: 100%;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .btn-primary:hover { background: #222; }
+
+    /* ─── Question Screen ───────────────────────────────────────── */
+    #screen-game { }
+
+    .progress-bar {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .dot {
+      width: 32px;
+      height: 6px;
+      background: #d3d6da;
+      transition: background 0.3s;
+    }
+
+    .dot.active  { background: #000; }
+    .dot.correct { background: #538d4e; }
+    .dot.wrong   { background: #cc3333; }
+
+    .q-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #787c7e;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .question-card {
+      border: 2px solid #000;
+      padding: 28px 28px 24px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .scenario-tag {
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #787c7e;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .question-text {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.12rem;
+      line-height: 1.65;
+    }
+
+    /* ─── Answer Tiles ──────────────────────────────────────────── */
+    .answer-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .btn-tile {
+      border: 2px solid #000;
+      background: #fff;
+      padding: 26px 12px;
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      cursor: pointer;
+      transition: background 0.08s, transform 0.08s;
+      position: relative;
+    }
+
+    .btn-tile:hover:not(:disabled) {
+      background: #f5f5f5;
+      transform: translateY(-1px);
+    }
+
+    .btn-tile:disabled { cursor: default; }
+
+    .btn-tile.flipping {
+      animation: tileFlip 0.45s ease forwards;
+    }
+
+    .btn-tile.state-correct {
+      background: #538d4e;
+      border-color: #538d4e;
+      color: #fff;
+    }
+
+    .btn-tile.state-wrong {
+      background: #cc3333;
+      border-color: #cc3333;
+      color: #fff;
+    }
+
+    .btn-tile.state-neutral {
+      background: #d3d6da;
+      border-color: #d3d6da;
+      color: #818384;
+    }
+
+    @keyframes tileFlip {
+      0%   { transform: scaleY(1); }
+      40%  { transform: scaleY(0.05); }
+      60%  { transform: scaleY(0.05); }
+      100% { transform: scaleY(1); }
+    }
+
+    /* ─── Explanation ───────────────────────────────────────────── */
+    .explanation-box {
+      border: 1px solid #d3d6da;
+      padding: 16px 18px;
+      background: #f9f9f9;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .explanation-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .exp-verdict {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .exp-verdict.v-correct { color: #538d4e; }
+    .exp-verdict.v-wrong   { color: #cc3333; }
+
+    .exp-text {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .btn-next {
+      margin-top: 14px;
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 14px 0;
+      width: 100%;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .btn-next.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ─── Score Delta Popup ─────────────────────────────────────── */
+    .delta-popup {
+      position: fixed;
+      top: 44%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.4rem;
+      font-weight: 900;
+      pointer-events: none;
+      z-index: 200;
+      animation: deltaPop 1.1s ease forwards;
+    }
+
+    .delta-popup.pos { color: #538d4e; }
+    .delta-popup.neg { color: #cc3333; }
+
+    @keyframes deltaPop {
+      0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.8); }
+      20%  { opacity: 1; transform: translate(-50%, -58%) scale(1.15); }
+      70%  { opacity: 1; transform: translate(-50%, -68%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -78%) scale(0.9); }
+    }
+
+    /* ─── End Screen ────────────────────────────────────────────── */
+    #screen-end { text-align: center; }
+
+    .end-eyebrow {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #787c7e;
+      margin-bottom: 8px;
+    }
+
+    .end-headline {
+      font-family: "Times New Roman", Times, serif;
+      font-size: clamp(2rem, 7vw, 3rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .end-tagline {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .score-block {
+      margin-bottom: 24px;
+    }
+
+    .score-number {
+      font-size: 5.5rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .score-denom {
+      font-size: 1rem;
+      color: #787c7e;
+      letter-spacing: 0.06em;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1.5px solid #000;
+      margin-bottom: 24px;
+    }
+
+    .stat-cell {
+      padding: 18px 8px;
+      border-right: 1px solid #d3d6da;
+    }
+
+    .stat-cell:last-child { border-right: none; }
+
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 900;
+      display: block;
+    }
+
+    .stat-lbl {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #787c7e;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ─── QR Box ────────────────────────────────────────────────── */
+    .qr-section {
+      border: 2px solid #000;
+      padding: 24px;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .qr-eyebrow {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #787c7e;
+      margin-bottom: 16px;
+    }
+
+    .qr-wrap {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 14px;
+    }
+
+    .qr-wrap svg { width: 100%; height: 100%; }
+
+    .qr-message {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      font-style: italic;
+      color: #333;
+    }
+
+    .qr-message strong { font-style: normal; font-weight: 700; }
+
+    .btn-outline {
+      background: #fff;
+      color: #000;
+      border: 2px solid #000;
+      padding: 14px 0;
+      width: 100%;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.12s;
+      margin-top: 10px;
+    }
+
+    .btn-outline:hover { background: #f5f5f5; }
+
+    /* ─── Dots Row (End) ────────────────────────────────────────── */
+    .result-dots {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .result-dot {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .result-dot.c { background: #538d4e; }
+    .result-dot.w { background: #cc3333; }
+
+    /* ─── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 420px) {
+      .question-card { padding: 20px 16px; }
+      .btn-tile { padding: 20px 8px; font-size: 1.1rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────── -->
+<header>
+  <div class="header-left">
+    <span class="game-brand">A<em>(m)</em>I Hallucinating?</span>
+    <div class="header-divider"></div>
+    <span class="header-tag">BS Detector</span>
+  </div>
+  <div class="score-pill" id="score-display">SCORE: <span id="score-val">0</span></div>
+</header>
+
+<!-- ── Main ────────────────────────────────────────────────────── -->
+<main>
+
+  <!-- START SCREEN -->
+  <div class="screen active" id="screen-start">
+    <h1 class="hero-title">A<em>(m)</em>I<br>Hallucinating?</h1>
+    <p class="hero-sub">Test Your BS Detector &amp; Win Free Coffee ☕</p>
+
+    <div class="rules-grid">
+      <div class="rule-cell">
+        <div class="rule-lbl">Questions</div>
+        <div class="rule-val">5 Scenarios</div>
+      </div>
+      <div class="rule-cell">
+        <div class="rule-lbl">Your Choice</div>
+        <div class="rule-val">FACT &nbsp;or&nbsp; CAP</div>
+      </div>
+      <div class="rule-cell">
+        <div class="rule-lbl">Correct Answer</div>
+        <div class="rule-val green">+5 points</div>
+      </div>
+      <div class="rule-cell">
+        <div class="rule-lbl">Wrong Answer</div>
+        <div class="rule-val red">−1 point</div>
+      </div>
+      <div class="rule-cell" style="grid-column: span 2;">
+        <div class="rule-lbl">Target to Win</div>
+        <div class="rule-val">15 points or higher</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="startGame()">START &nbsp;→</button>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div class="screen" id="screen-game">
+    <div class="progress-bar" id="progress-bar">
+      <div class="dot" id="dot-0"></div>
+      <div class="dot" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+      <div class="dot" id="dot-3"></div>
+      <div class="dot" id="dot-4"></div>
+    </div>
+
+    <p class="q-label" id="q-label">Question 1 of 5</p>
+
+    <div class="question-card" id="q-card">
+      <span class="scenario-tag" id="q-tag"></span>
+      <p class="question-text" id="q-text"></p>
+    </div>
+
+    <div class="answer-row">
+      <button class="btn-tile" id="btn-fact" onclick="answer('FACT')">FACT</button>
+      <button class="btn-tile" id="btn-cap"  onclick="answer('CAP')">CAP</button>
+    </div>
+
+    <div class="explanation-box" id="exp-box">
+      <div class="exp-verdict" id="exp-verdict"></div>
+      <p class="exp-text" id="exp-text"></p>
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()">NEXT &nbsp;→</button>
+    </div>
+  </div>
+
+  <!-- END SCREEN -->
+  <div class="screen" id="screen-end">
+    <p class="end-eyebrow" id="end-eyebrow"></p>
+    <h2 class="end-headline" id="end-headline"></h2>
+    <p class="end-tagline" id="end-tagline"></p>
+
+    <div class="result-dots" id="result-dots"></div>
+
+    <div class="score-block">
+      <div class="score-number" id="end-score">0</div>
+      <div class="score-denom">out of 25 points</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <span class="stat-num" id="stat-correct">0</span>
+        <span class="stat-lbl">Correct</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" id="stat-wrong">0</span>
+        <span class="stat-lbl">Wrong</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" id="stat-accuracy">0%</span>
+        <span class="stat-lbl">Accuracy</span>
+      </div>
+    </div>
+
+    <div class="qr-section" id="qr-section">
+      <p class="qr-eyebrow" id="qr-eyebrow"></p>
+      <div class="qr-wrap">
+        <!-- SVG QR-code placeholder with correct corner anchors -->
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <!-- Corner squares -->
+          <rect x="5"  y="5"  width="26" height="26" stroke="#000" stroke-width="4"/>
+          <rect x="11" y="11" width="14" height="14" fill="#000"/>
+          <rect x="69" y="5"  width="26" height="26" stroke="#000" stroke-width="4"/>
+          <rect x="75" y="11" width="14" height="14" fill="#000"/>
+          <rect x="5"  y="69" width="26" height="26" stroke="#000" stroke-width="4"/>
+          <rect x="11" y="75" width="14" height="14" fill="#000"/>
+          <!-- Data pattern -->
+          <rect x="38" y="5"  width="5" height="5"  fill="#000"/>
+          <rect x="46" y="5"  width="5" height="5"  fill="#000"/>
+          <rect x="54" y="5"  width="10" height="5" fill="#000"/>
+          <rect x="38" y="13" width="5" height="5"  fill="#000"/>
+          <rect x="50" y="13" width="5" height="5"  fill="#000"/>
+          <rect x="60" y="13" width="5" height="5"  fill="#000"/>
+          <rect x="38" y="21" width="10" height="5" fill="#000"/>
+          <rect x="56" y="21" width="8"  height="5" fill="#000"/>
+          <rect x="38" y="29" width="5" height="5"  fill="#000"/>
+          <rect x="46" y="29" width="8" height="5"  fill="#000"/>
+          <rect x="60" y="29" width="5" height="5"  fill="#000"/>
+          <rect x="5"  y="38" width="5" height="5"  fill="#000"/>
+          <rect x="14" y="38" width="5" height="5"  fill="#000"/>
+          <rect x="23" y="38" width="5" height="5"  fill="#000"/>
+          <rect x="38" y="38" width="5" height="5"  fill="#000"/>
+          <rect x="50" y="38" width="5" height="5"  fill="#000"/>
+          <rect x="60" y="38" width="5" height="5"  fill="#000"/>
+          <rect x="69" y="38" width="5" height="5"  fill="#000"/>
+          <rect x="80" y="38" width="5" height="5"  fill="#000"/>
+          <rect x="90" y="38" width="5" height="5"  fill="#000"/>
+          <rect x="5"  y="46" width="10" height="5" fill="#000"/>
+          <rect x="20" y="46" width="5" height="5"  fill="#000"/>
+          <rect x="38" y="46" width="5" height="5"  fill="#000"/>
+          <rect x="48" y="46" width="8" height="5"  fill="#000"/>
+          <rect x="60" y="46" width="5" height="5"  fill="#000"/>
+          <rect x="74" y="46" width="10" height="5" fill="#000"/>
+          <rect x="90" y="46" width="5" height="5"  fill="#000"/>
+          <rect x="5"  y="54" width="5" height="5"  fill="#000"/>
+          <rect x="16" y="54" width="8" height="5"  fill="#000"/>
+          <rect x="30" y="54" width="5" height="5"  fill="#000"/>
+          <rect x="40" y="54" width="8" height="5"  fill="#000"/>
+          <rect x="56" y="54" width="5" height="5"  fill="#000"/>
+          <rect x="66" y="54" width="5" height="5"  fill="#000"/>
+          <rect x="78" y="54" width="5" height="5"  fill="#000"/>
+          <rect x="88" y="54" width="7" height="5"  fill="#000"/>
+          <rect x="5"  y="62" width="8" height="5"  fill="#000"/>
+          <rect x="18" y="62" width="5" height="5"  fill="#000"/>
+          <rect x="28" y="62" width="5" height="5"  fill="#000"/>
+          <rect x="44" y="62" width="5" height="5"  fill="#000"/>
+          <rect x="54" y="62" width="10" height="5" fill="#000"/>
+          <rect x="69" y="62" width="5" height="5"  fill="#000"/>
+          <rect x="80" y="62" width="5" height="5"  fill="#000"/>
+          <rect x="90" y="62" width="5" height="5"  fill="#000"/>
+          <rect x="38" y="69" width="5" height="5"  fill="#000"/>
+          <rect x="48" y="69" width="8" height="5"  fill="#000"/>
+          <rect x="62" y="69" width="5" height="5"  fill="#000"/>
+          <rect x="80" y="69" width="10" height="5" fill="#000"/>
+          <rect x="38" y="77" width="10" height="5" fill="#000"/>
+          <rect x="54" y="77" width="5" height="5"  fill="#000"/>
+          <rect x="64" y="77" width="8" height="5"  fill="#000"/>
+          <rect x="77" y="77" width="5" height="5"  fill="#000"/>
+          <rect x="88" y="77" width="7" height="5"  fill="#000"/>
+          <rect x="38" y="85" width="5" height="5"  fill="#000"/>
+          <rect x="46" y="85" width="5" height="5"  fill="#000"/>
+          <rect x="56" y="85" width="8" height="5"  fill="#000"/>
+          <rect x="69" y="85" width="5" height="5"  fill="#000"/>
+          <rect x="80" y="85" width="5" height="5"  fill="#000"/>
+          <rect x="90" y="85" width="5" height="5"  fill="#000"/>
+          <rect x="38" y="93" width="8" height="5"  fill="#000"/>
+          <rect x="52" y="93" width="5" height="5"  fill="#000"/>
+          <rect x="62" y="93" width="5" height="5"  fill="#000"/>
+          <rect x="74" y="93" width="10" height="5" fill="#000"/>
+          <rect x="90" y="93" width="5" height="5"  fill="#000"/>
+        </svg>
+      </div>
+      <p class="qr-message" id="qr-message"></p>
+    </div>
+
+    <button class="btn-outline" onclick="restartGame()">↺ &nbsp;Play Again</button>
+  </div>
+
+</main>
+
+<!-- ── Script ──────────────────────────────────────────────────── -->
+<script>
+  /* ─── Questions ──────────────────────────────────────────────── */
+  const QUESTIONS = [
+    {
+      tag: "Scenario 01 · Citations & References",
+      text: "A fellow student shares their AI-assisted essay draft with you. It cites: \"Johnson, R., & Li, W. (2023). Cognitive Load and AI-Assisted Learning. Journal of Educational Research, 116(4), 112–128.\" The reference is perfectly formatted in APA style. This means it is a reliable, real source.",
+      answer: "CAP",
+      explanation: "CAP. AI models routinely fabricate citations that look completely legitimate — correct journal names, realistic volume numbers, plausible authors — but do not actually exist. This is called a hallucination. A polished APA format is no guarantee of accuracy. Always verify references in a database like Scopus or Google Scholar."
+    },
+    {
+      tag: "Scenario 02 · Academic Integrity",
+      text: "Submitting an essay that was written primarily by ChatGPT — even if you personally reviewed and lightly edited it before submission — constitutes academic misconduct under UQ's Student Integrity and Misconduct Policy.",
+      answer: "FACT",
+      explanation: "FACT. Presenting AI-generated text as your own work is a form of academic collusion and contract cheating regardless of how much you edited it. UQ's policy is clear: the submitted work must reflect your own intellectual effort. Light edits do not transfer authorship."
+    },
+    {
+      tag: "Scenario 03 · AI Confidence vs. Accuracy",
+      text: "An AI chatbot confidently tells you: \"The Australian government passed the Digital Education Safety Act 2023, requiring all universities to publish AI use policies by January 2024.\" Because the chatbot sounds authoritative and specific, this information is reliable.",
+      answer: "CAP",
+      explanation: "CAP. AI models generate text that sounds authoritative even when the content is entirely fabricated. Specific details — dates, legislation names, policy requirements — are prime hallucination territory. Always verify legal or policy claims through official government or institutional sources."
+    },
+    {
+      tag: "Scenario 04 · Knowledge Cutoffs",
+      text: "Because AI language models are trained on data up to a fixed cutoff date, they may provide outdated or completely fabricated information about recent events, new legislation, or the latest academic research.",
+      answer: "FACT",
+      explanation: "FACT. Every AI model has a knowledge cutoff — a date beyond which it has no training data. This means it cannot know about events or publications after that date. Worse, it may fill the gap by confidently generating plausible-sounding but false information rather than simply saying \"I don't know.\""
+    },
+    {
+      tag: "Scenario 05 · Contract Cheating",
+      text: "Paying a third-party service to write your assignment counts as contract cheating. However, asking a free AI tool like ChatGPT to write it for you is a different, less serious category of academic misconduct.",
+      answer: "CAP",
+      explanation: "CAP. The mechanism — paid service or free AI — does not change the nature of the violation. Both involve submitting work that is not your own, which constitutes contract cheating and academic misconduct under UQ policy. The consequences are equally serious in both cases."
+    }
+  ];
+
+  /* ─── State ───────────────────────────────────────────────────── */
+  let currentQ = 0;
+  let score    = 0;
+  let correct  = 0;
+  let wrong    = 0;
+  let results  = []; // 'c' or 'w' per question
+  let answered = false;
+
+  /* ─── Show / Hide Screens ─────────────────────────────────────── */
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  /* ─── Score Display ───────────────────────────────────────────── */
+  function updateScoreDisplay() {
+    document.getElementById('score-val').textContent = score;
+  }
+
+  /* ─── Start ───────────────────────────────────────────────────── */
+  function startGame() {
+    currentQ = 0; score = 0; correct = 0; wrong = 0; results = [];
+    updateScoreDisplay();
+    loadQuestion();
+    showScreen('screen-game');
+  }
+
+  /* ─── Load Question ───────────────────────────────────────────── */
+  function loadQuestion() {
+    const q = QUESTIONS[currentQ];
+    answered = false;
+
+    document.getElementById('q-label').textContent = `Question ${currentQ + 1} of ${QUESTIONS.length}`;
+    document.getElementById('q-tag').textContent   = q.tag;
+    document.getElementById('q-text').textContent  = q.text;
+
+    // Reset tiles
+    const fact = document.getElementById('btn-fact');
+    const cap  = document.getElementById('btn-cap');
+    [fact, cap].forEach(b => {
+      b.disabled = false;
+      b.className = 'btn-tile';
+    });
+
+    // Reset explanation
+    const expBox  = document.getElementById('exp-box');
+    const btnNext = document.getElementById('btn-next');
+    expBox.classList.remove('visible');
+    btnNext.classList.remove('visible');
+
+    // Update progress dots
+    for (let i = 0; i < 5; i++) {
+      const dot = document.getElementById(`dot-${i}`);
+      dot.className = 'dot';
+      if (i < currentQ)   dot.classList.add(results[i]);
+      if (i === currentQ) dot.classList.add('active');
+    }
+  }
+
+  /* ─── Answer ──────────────────────────────────────────────────── */
+  function answer(choice) {
+    if (answered) return;
+    answered = true;
+
+    const q       = QUESTIONS[currentQ];
+    const isRight = (choice === q.answer);
+    const fact    = document.getElementById('btn-fact');
+    const cap     = document.getElementById('btn-cap');
+    const chosen  = choice === 'FACT' ? fact : cap;
+    const other   = choice === 'FACT' ? cap  : fact;
+
+    // Disable both buttons immediately
+    fact.disabled = true;
+    cap.disabled  = true;
+
+    // Animate the chosen tile
+    chosen.classList.add('flipping');
+
+    setTimeout(() => {
+      // Apply final state after mid-flip
+      chosen.classList.add(isRight ? 'state-correct' : 'state-wrong');
+      other.classList.add('state-neutral');
+
+      // Score
+      if (isRight) {
+        score   += 5;
+        correct += 1;
+        results.push('correct');
+        showDelta('+5', true);
+      } else {
+        score   -= 1;
+        wrong   += 1;
+        results.push('wrong');
+        showDelta('−1', false);
+      }
+      updateScoreDisplay();
+
+      // Update current dot
+      document.getElementById(`dot-${currentQ}`).className =
+        'dot ' + (isRight ? 'correct' : 'wrong');
+
+      // Show explanation
+      setTimeout(() => showExplanation(isRight, q.explanation), 120);
+    }, 220); // mid-flip moment
+  }
+
+  /* ─── Score Delta ─────────────────────────────────────────────── */
+  function showDelta(text, positive) {
+    const el = document.createElement('div');
+    el.className = `delta-popup ${positive ? 'pos' : 'neg'}`;
+    el.textContent = text;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1150);
+  }
+
+  /* ─── Show Explanation ────────────────────────────────────────── */
+  function showExplanation(isRight, text) {
+    const verdict = document.getElementById('exp-verdict');
+    verdict.textContent  = isRight ? '✓ Correct' : '✗ Wrong';
+    verdict.className    = `exp-verdict ${isRight ? 'v-correct' : 'v-wrong'}`;
+    document.getElementById('exp-text').textContent = text;
+
+    document.getElementById('exp-box').classList.add('visible');
+
+    // Show next button after short delay
+    setTimeout(() => {
+      document.getElementById('btn-next').classList.add('visible');
+    }, 400);
+  }
+
+  /* ─── Next Question ───────────────────────────────────────────── */
+  function nextQuestion() {
+    currentQ++;
+    if (currentQ < QUESTIONS.length) {
+      loadQuestion();
+    } else {
+      showEnd();
+    }
+  }
+
+  /* ─── End Screen ──────────────────────────────────────────────── */
+  function showEnd() {
+    const won      = score >= 15;
+    const accuracy = Math.round((correct / QUESTIONS.length) * 100);
+
+    document.getElementById('end-eyebrow').textContent =
+      won ? 'Quest Cleared! 🎉' : 'Mission Failed';
+
+    document.getElementById('end-headline').textContent =
+      won ? 'You passed the BS Detector.' : 'You fell for the hallucination.';
+
+    document.getElementById('end-tagline').textContent =
+      won
+        ? 'Show this screen to our staff to claim your free coffee!'
+        : 'BUT — scan the QR code below for a second chance. Find the definition of Contract Cheating, then tell our staff the answer to win!';
+
+    document.getElementById('end-score').textContent    = score;
+    document.getElementById('stat-correct').textContent = correct;
+    document.getElementById('stat-wrong').textContent   = wrong;
+    document.getElementById('stat-accuracy').textContent = accuracy + '%';
+
+    // Result dots
+    const dotsEl = document.getElementById('result-dots');
+    dotsEl.innerHTML = '';
+    results.forEach((r, i) => {
+      const d = document.createElement('div');
+      d.className = `result-dot ${r === 'correct' ? 'c' : 'w'}`;
+      d.textContent = r === 'correct' ? '✓' : '✗';
+      dotsEl.appendChild(d);
+    });
+
+    // QR section
+    document.getElementById('qr-eyebrow').textContent =
+      won ? 'Scan while you wait for your coffee' : 'Scan for your extra life';
+
+    document.getElementById('qr-message').innerHTML =
+      won
+        ? '"Scan this to make sure your next essay doesn\'t get flagged by Turnitin." → <strong>UQ AI Student Hub</strong>'
+        : 'Visit the <strong>UQ AI Student Hub</strong>, find the definition of <em>Contract Cheating</em>, and tell our staff the answer!';
+
+    showScreen('screen-end');
+  }
+
+  /* ─── Restart ─────────────────────────────────────────────────── */
+  function restartGame() {
+    showScreen('screen-start');
+  }
+</script>
+
+</body>
+</html>
