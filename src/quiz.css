@@ -1139,3 +1139,130 @@ main {
     flex-direction: column;
   }
 }
+
+/* ─── Stat Page ─────────────────────────────────────────────── */
+.stat-screen {
+  padding: 32px 16px;
+  text-align: left;
+}
+
+.stat-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.stat-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--c-primary);
+  margin: 0;
+}
+
+.stat-subtitle {
+  font-size: 0.85rem;
+  color: var(--c-muted);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stat-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 320px;
+}
+
+.stat-login-btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.stat-loading {
+  font-size: 0.85rem;
+  color: var(--c-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 32px 0;
+  text-align: center;
+}
+
+.stat-error {
+  font-size: 0.85rem;
+  color: var(--c-wrong, #e53e3e);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* 4-column override for stat summary grid */
+.stat-summary-grid {
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 28px;
+}
+
+@media (max-width: 480px) {
+  .stat-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat-section-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--c-muted);
+  margin-bottom: 10px;
+}
+
+.stat-faculty-table {
+  border: 1.5px solid var(--c-border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.stat-faculty-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--c-border);
+  font-size: 0.9rem;
+}
+
+.stat-faculty-row:last-child { border-bottom: none; }
+
+.stat-faculty-name {
+  flex: 1;
+  font-weight: 700;
+  color: var(--c-primary);
+}
+
+.stat-faculty-val {
+  color: var(--c-muted);
+  font-size: 0.8rem;
+  min-width: 80px;
+  text-align: right;
+}
+
+.stat-signout {
+  font-size: 0.75rem;
+  padding: 6px 14px;
+  margin-top: 0;
+}
+
+.stat-type-name {
+  text-transform: capitalize;
+}
+
+.stat-fail-rate {
+  font-weight: 700;
+}
+
+.stat-fail-rate.high {
+  color: var(--c-wrong, #e53e3e);
+}

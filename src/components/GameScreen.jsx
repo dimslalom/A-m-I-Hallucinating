@@ -49,7 +49,7 @@ export default function GameScreen({ questions, currentQ, results, onAnswer, onN
         [otherKey]: 'state-neutral',
       });
       setLastCorrect(isRight);
-      onAnswer(choice, isRight);
+      onAnswer(choice, isRight, q.type);
 
       setTimeout(() => {
         setShowExp(true);
