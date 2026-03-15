@@ -63,7 +63,11 @@ export default function StatPage() {
         // Requires RLS policy on quiz_results for admin reads.
         const { data: rows, error: statsErr } = await supabase
           .from('quiz_results')
-          .select('correct, wrong, accuracy, faculty, results, question_types');
+          .select(
+            'correct, wrong, accuracy, faculty,' +
+            'q1_type, q1_correct, q2_type, q2_correct, q3_type, q3_correct,' +
+            'q4_type, q4_correct, q5_type, q5_correct'
+          );
 
         if (statsErr) throw statsErr;
         if (cancelled) return;
@@ -85,18 +89,15 @@ export default function StatPage() {
           byFaculty[f].correct += r.correct ?? 0;
         }
 
-        // Per-question-type breakdown
-        // Zips results[] + question_types[] from each row to tally seen/wrong per type
+        // Per-question-type breakdown using flat q1–q5 columns
         const byType = {};
         for (const r of rows) {
-          const types   = r.question_types;
-          const results = r.results;
-          if (!Array.isArray(types) || !Array.isArray(results)) continue;
-          for (let i = 0; i < types.length; i++) {
-            const t = types[i] || 'unknown';
+          for (let i = 1; i <= 5; i++) {
+            const t = r[`q${i}_type`];
+            if (!t) continue; // column not yet populated (old rows)
             if (!byType[t]) byType[t] = { seen: 0, wrong: 0 };
             byType[t].seen++;
-            if (results[i] === 'wrong') byType[t].wrong++;
+            if (r[`q${i}_correct`] === false) byType[t].wrong++;
           }
         }
 

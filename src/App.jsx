@@ -19,6 +19,8 @@ function pickRandom(pool, count) {
   return arr.slice(0, count);
 }
 
+// ── QuizApp is defined at module level so React never remounts it
+//    due to a new function reference on App re-render.
 function QuizApp() {
   const [screen, setScreen]               = useState('start');
   const [gameQuestions, setGameQuestions] = useState([]);
@@ -26,7 +28,6 @@ function QuizApp() {
   const [correct, setCorrect]             = useState(0);
   const [wrong, setWrong]                 = useState(0);
   const [results, setResults]             = useState([]);
-  const [questionTypes, setQuestionTypes] = useState([]);
 
   function startGame() {
     setGameQuestions(pickRandom(QUESTIONS, ROUND_SIZE));
@@ -34,15 +35,13 @@ function QuizApp() {
     setCorrect(0);
     setWrong(0);
     setResults([]);
-    setQuestionTypes([]);
     setScreen('game');
   }
 
-  function handleAnswer(choice, isRight, type) {
+  function handleAnswer(choice, isRight) {
     setCorrect(c => c + (isRight ? 1 : 0));
     setWrong(w => w + (isRight ? 0 : 1));
     setResults(r => [...r, isRight ? 'correct' : 'wrong']);
-    setQuestionTypes(t => [...t, type]);
   }
 
   function handleNext() {
@@ -56,16 +55,26 @@ function QuizApp() {
 
   async function saveResult({ faculty, studentId }) {
     const accuracy = Math.round((correct / ROUND_SIZE) * 100);
+
+    // Build flat per-question columns from gameQuestions + results.
+    // gameQuestions[i].type is the question category; results[i] is 'correct'|'wrong'.
+    const qCols = {};
+    for (let i = 0; i < gameQuestions.length; i++) {
+      qCols[`q${i + 1}_type`]    = gameQuestions[i]?.type    ?? null;
+      qCols[`q${i + 1}_correct`] = results[i] === 'correct';
+    }
+
     const { data, error } = await supabase.from('quiz_results').insert({
       student_id: studentId || null,
-      faculty: faculty || null,
-      score: correct,
+      faculty:    faculty   || null,
+      score:      correct,
       correct,
       wrong,
       accuracy,
       results,
-      question_types: questionTypes,
+      ...qCols,
     }).select('id').single();
+
     if (error) console.error('Supabase insert error:', error);
     return data?.id ?? null;
   }
@@ -75,7 +84,7 @@ function QuizApp() {
       .from('quiz_results')
       .update({
         ...(studentId && { student_id: studentId }),
-        ...(faculty  && { faculty }),
+        ...(faculty   && { faculty }),
       })
       .eq('id', id);
     if (error) console.error('Supabase update error:', error);
@@ -117,7 +126,7 @@ export default function App() {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<QuizApp />} />
+          <Route path="/"     element={<QuizApp />} />
           <Route path="/stat" element={<StatPage />} />
         </Routes>
       </main>
