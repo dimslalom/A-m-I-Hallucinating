@@ -49,17 +49,30 @@ export default function App() {
     }
   }
 
-  async function saveResult(studentId) {
+  async function saveResult({ faculty, studentId }) {
     const accuracy = Math.round((correct / ROUND_SIZE) * 100);
-    const { error } = await supabase.from('quiz_results').insert({
-      student_id: studentId,
+    const { data, error } = await supabase.from('quiz_results').insert({
+      student_id: studentId || null,
+      faculty: faculty || null,
       score: correct,
       correct,
       wrong,
       accuracy,
       results,
-    });
+    }).select('id').single();
     if (error) console.error('Supabase insert error:', error);
+    return data?.id ?? null;
+  }
+
+  async function updateResult({ id, studentId, faculty }) {
+    const { error } = await supabase
+      .from('quiz_results')
+      .update({
+        ...(studentId && { student_id: studentId }),
+        ...(faculty  && { faculty }),
+      })
+      .eq('id', id);
+    if (error) console.error('Supabase update error:', error);
   }
 
   function restartGame() {
@@ -88,6 +101,7 @@ export default function App() {
             wrong={wrong}
             results={results}
             onSave={saveResult}
+            onUpdate={updateResult}
             onRestart={restartGame}
           />
         )}

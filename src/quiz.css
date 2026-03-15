@@ -427,6 +427,78 @@ main {
   margin-bottom: 20px;
 }
 
+/* ─── Faculty Selection ─────────────────────────────────────── */
+.faculty-wrap {
+  margin-bottom: 24px;
+}
+
+.faculty-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--c-text-muted, #888);
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.faculty-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.btn-faculty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 8px;
+  border: 2px solid var(--c-border);
+  background: transparent;
+  color: var(--c-text);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.btn-faculty:hover:not(:disabled) {
+  border-color: var(--c-primary);
+  background: var(--c-primary);
+  color: #fff;
+}
+
+.btn-faculty.selected {
+  border-color: var(--c-primary);
+  background: var(--c-primary);
+  color: #fff;
+}
+
+.btn-faculty:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.faculty-abbr {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.faculty-full {
+  font-size: 0.65rem;
+  opacity: 0.85;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.faculty-confirm {
+  font-size: 0.8rem;
+  color: var(--c-correct);
+  margin-top: 8px;
+  text-align: left;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

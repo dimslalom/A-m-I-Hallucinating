@@ -3,18 +3,47 @@ import aiqr from '../assets/aiqr.png';
 
 const ROUND_SIZE = 5;
 
-export default function EndScreen({ correct, wrong, results, onSave, onRestart }) {
-  const [studentId, setStudentId] = useState('');
-  const [saved, setSaved]         = useState(false);
-  const [saving, setSaving]       = useState(false);
+const FACULTIES = [
+  { abbr: 'BEL',      label: 'Business, Economics & Law' },
+  { abbr: 'EAIT',     label: 'Engineering, Architecture & IT' },
+  { abbr: 'HaBS',     label: 'Health & Behavioural Sciences' },
+  { abbr: 'HASS',     label: 'Humanities, Arts & Social Sciences' },
+  { abbr: 'Medicine', label: 'Medicine' },
+  { abbr: 'Science',  label: 'Science' },
+];
+
+export default function EndScreen({ correct, wrong, results, onSave, onUpdate, onRestart }) {
+  const [studentId, setStudentId]   = useState('');
+  const [faculty, setFaculty]       = useState(null);
+  const [savedRowId, setSavedRowId] = useState(null);
+  const [saved, setSaved]           = useState(false);
+  const [saving, setSaving]         = useState(false);
 
   const accuracy = Math.round((correct / ROUND_SIZE) * 100);
   const won      = correct >= 4;
 
+  async function handleFacultySelect(abbr) {
+    if (saving) return;
+    setFaculty(abbr);
+    setSaving(true);
+    if (savedRowId) {
+      // already saved a row — just update faculty
+      await onUpdate({ id: savedRowId, faculty: abbr });
+    } else {
+      const id = await onSave({ faculty: abbr, studentId: null });
+      setSavedRowId(id);
+    }
+    setSaving(false);
+  }
+
   async function handleSave() {
     if (!studentId.trim() || saving || saved) return;
     setSaving(true);
-    await onSave(studentId.trim());
+    if (savedRowId) {
+      await onUpdate({ id: savedRowId, studentId: studentId.trim() });
+    } else {
+      await onSave({ faculty, studentId: studentId.trim() });
+    }
     setSaving(false);
     setSaved(true);
   }
@@ -59,10 +88,28 @@ export default function EndScreen({ correct, wrong, results, onSave, onRestart }
         </div>
       </div>
 
+      <div className="faculty-wrap">
+        <p className="faculty-label">Which faculty are you from?</p>
+        <div className="faculty-grid">
+          {FACULTIES.map(({ abbr, label }) => (
+            <button
+              key={abbr}
+              className={`btn-faculty${faculty === abbr ? ' selected' : ''}`}
+              onClick={() => handleFacultySelect(abbr)}
+              disabled={saving}
+            >
+              <span className="faculty-abbr">{abbr}</span>
+              <span className="faculty-full">{label}</span>
+            </button>
+          ))}
+        </div>
+        {faculty && !saved && <p className="faculty-confirm">Got it — you&apos;re from <strong>{faculty}</strong>!</p>}
+      </div>
+
       {!saved ? (
         <div className="save-score-wrap">
           <label className="student-id-label" htmlFor="end-student-id">
-            Student ID <span className="optional">(optional — save your score)</span>
+            Student ID <span className="optional">(optional — link your score)</span>
           </label>
           <div className="save-row">
             <input
