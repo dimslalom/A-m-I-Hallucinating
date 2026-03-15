@@ -497,7 +497,7 @@ export const QUESTIONS = [
   // ── Q19: Tweet ────────────────────────────────────────────────────────────
   {
     type: 'tweet',
-    prompt: 'Which post is from someone who asked AI for feedback?',
+    prompt: 'Which post is from a real person who asked AI for feedback?',
     optionA: {
       name: 'tom r.',
       handle: '@tom.r.writes',

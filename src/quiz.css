@@ -1140,129 +1140,240 @@ main {
   }
 }
 
-/* ─── Stat Page ─────────────────────────────────────────────── */
-.stat-screen {
-  padding: 32px 16px;
+/* ─── Stat Page (sp- prefix) ────────────────────────────────── */
+.sp-screen {
+  padding: 28px 16px 48px;
   text-align: left;
+  max-width: 900px;
 }
 
-.stat-header-row {
+/* Header row */
+.sp-header-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
-.stat-title {
-  font-size: 1.6rem;
+.sp-page-title {
+  font-size: 1.7rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: var(--c-primary);
   margin: 0;
 }
 
-.stat-subtitle {
-  font-size: 0.85rem;
-  color: var(--c-muted);
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.stat-login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 320px;
-}
-
-.stat-login-btn {
-  width: 100%;
-  margin-top: 4px;
-}
-
-.stat-loading {
-  font-size: 0.85rem;
+.sp-page-sub {
+  font-size: 0.8rem;
   color: var(--c-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding: 32px 0;
-  text-align: center;
+  margin-bottom: 20px;
 }
 
-.stat-error {
-  font-size: 0.85rem;
-  color: var(--c-wrong, #e53e3e);
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-
-/* 4-column override for stat summary grid */
-.stat-summary-grid {
-  grid-template-columns: repeat(4, 1fr);
-  margin-bottom: 28px;
-}
-
-@media (max-width: 480px) {
-  .stat-summary-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.stat-section-title {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 700;
-  color: var(--c-muted);
-  margin-bottom: 10px;
-}
-
-.stat-faculty-table {
-  border: 1.5px solid var(--c-border);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 24px;
-}
-
-.stat-faculty-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--c-border);
-  font-size: 0.9rem;
-}
-
-.stat-faculty-row:last-child { border-bottom: none; }
-
-.stat-faculty-name {
-  flex: 1;
-  font-weight: 700;
-  color: var(--c-primary);
-}
-
-.stat-faculty-val {
-  color: var(--c-muted);
-  font-size: 0.8rem;
-  min-width: 80px;
-  text-align: right;
-}
-
-.stat-signout {
-  font-size: 0.75rem;
+.sp-signout {
+  font-size: 0.72rem;
   padding: 6px 14px;
   margin-top: 0;
 }
 
-.stat-type-name {
-  text-transform: capitalize;
+/* Status / error */
+.sp-status {
+  font-size: 0.85rem;
+  color: var(--c-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 48px 0;
+  text-align: center;
 }
 
-.stat-fail-rate {
+.sp-error {
+  font-size: 0.9rem;
+  color: var(--c-wrong);
   font-weight: 700;
+  margin-bottom: 16px;
 }
 
-.stat-fail-rate.high {
-  color: var(--c-wrong, #e53e3e);
+/* Login form */
+.sp-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+}
+
+.sp-login-btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* ── KPI Cards ─────────────────────────────────────────── */
+.sp-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.sp-kpi-card {
+  border: 1.5px solid var(--c-border);
+  border-top-width: 3px;
+  border-radius: 8px;
+  padding: 16px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: var(--c-bg);
+}
+
+.sp-kpi-value {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.sp-kpi-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--c-muted);
+  font-weight: 600;
+}
+
+.sp-kpi-sub {
+  font-size: 0.68rem;
+  color: var(--c-muted);
+  opacity: 0.7;
+}
+
+/* ── Sections ──────────────────────────────────────────── */
+.sp-section {
+  margin-bottom: 28px;
+}
+
+.sp-section-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--c-muted);
+  margin-bottom: 12px;
+}
+
+/* ── Two-column layout ─────────────────────────────────── */
+.sp-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+/* ── Chart wrappers ────────────────────────────────────── */
+.sp-chart-wrap {
+  border: 1.5px solid var(--c-border);
+  border-radius: 8px;
+  padding: 16px 8px 12px;
+  background: var(--c-bg);
+}
+
+.sp-chart-wrap--short {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── Donut legend ──────────────────────────────────────── */
+.sp-donut-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--c-muted);
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.sp-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ── Tooltip ───────────────────────────────────────────── */
+.sp-tooltip {
+  background: var(--c-bg);
+  border: 1.5px solid var(--c-border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: var(--c-primary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.sp-tooltip-label {
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--c-primary);
+}
+
+/* ── Question type breakdown cards ─────────────────────── */
+.sp-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.sp-type-card {
+  border: 1.5px solid var(--c-border);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--c-bg);
+}
+
+.sp-type-name {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-primary);
+  margin-bottom: 10px;
+}
+
+.sp-type-bar-bg {
+  height: 6px;
+  background: var(--c-accent-light);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.sp-type-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.sp-type-stats {
+  display: flex;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sp-kpi-row         { grid-template-columns: repeat(2, 1fr); }
+  .sp-two-col         { grid-template-columns: 1fr; }
+  .sp-type-grid       { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 400px) {
+  .sp-type-grid       { grid-template-columns: 1fr; }
+  .sp-kpi-row         { grid-template-columns: repeat(2, 1fr); }
 }

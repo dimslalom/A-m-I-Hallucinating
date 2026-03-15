@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { QUESTIONS } from './data/questions';
 import { supabase } from './lib/supabase';
@@ -6,7 +6,9 @@ import Header from './components/Header';
 import StartScreen from './components/StartScreen';
 import GameScreen from './components/GameScreen';
 import EndScreen from './components/EndScreen';
-import StatPage from './pages/StatPage';
+
+// Lazy-load the stats page so recharts doesn't bloat the main bundle
+const StatPage = lazy(() => import('./pages/StatPage'));
 
 const ROUND_SIZE = 5;
 
@@ -127,7 +129,11 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/"     element={<QuizApp />} />
-          <Route path="/stat" element={<StatPage />} />
+          <Route path="/stat" element={
+            <Suspense fallback={<div className="screen sp-screen"><p className="sp-status">Loading…</p></div>}>
+              <StatPage />
+            </Suspense>
+          } />
         </Routes>
       </main>
     </>
