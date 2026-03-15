@@ -1069,7 +1069,7 @@ main {
 
 .ig-photo {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 9;
 }
 
 .ig-actions {

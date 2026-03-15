@@ -328,7 +328,7 @@ export default function StatPage() {
               <div className="sp-type-bar-bg">
                 <div
                   className="sp-type-bar-fill"
-                  style={{ width: `${100 - failPct}%`, background: failColor(100 - failPct) }}
+                  style={{ width: `${100 - failPct}%`, background: failColor(failPct) }}
                 />
               </div>
               <div className="sp-type-stats">

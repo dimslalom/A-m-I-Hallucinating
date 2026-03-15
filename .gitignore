@@ -26,4 +26,8 @@ dist-ssr
 # Claude
 .claude/
 
-
+# Obsidian auto-generated workspace config (machine-specific, not the notes)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.obsidian/
