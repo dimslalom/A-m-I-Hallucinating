@@ -210,6 +210,9 @@ export default function StatPage() {
   if (error)           return <Shell><p className="sp-error">Error: {error}</p><SignOut onLogout={handleLogout} /></Shell>;
   if (isAdmin === false) return <Shell><p className="sp-error">Access denied.</p><SignOut onLogout={handleLogout} /></Shell>;
 
+  // stats can briefly be null between session resolving and the useEffect firing
+  if (!stats) return <Shell><p className="sp-status">Loading stats…</p></Shell>;
+
   // ── Dashboard ────────────────────────────────────────────────
   const donutData = [
     { name: 'Correct', value: stats.totalCorrect },
